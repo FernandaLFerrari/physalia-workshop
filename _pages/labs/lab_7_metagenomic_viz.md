@@ -14,7 +14,6 @@ custom_js:
 # Metagenomic visualizations in R
 
 * Start from a clean environment, set your working directory and load the data.
-* Download the data and put it into the data directory: https://github.com/MelanieSch/physalia-workshop/raw/master/data/labs/lab_7_1_metaphlan_merged_MGX_species_relAb.Rdata
 
 
 ```R
@@ -42,7 +41,7 @@ load(file="Data/metaphlan_merged_MGX_species_relAb.Rdata")
 
 
 
-**Load the packages that we will need for the tutorial. (Install them if necessary.)**
+**Load the packages for the tutorial. (Install them if necessary.)**
 
 ```R
 library(vegan)
@@ -66,7 +65,7 @@ metadata[1:4,] # check the output
 * Extract species data
 
 ```R
-species<-t(data[8:nrow(data),])
+species=t(data[8:nrow(data),])
 species=apply(species,c(1,2),function(x) as.numeric(as.character(x)))
 
 species[1:4,1:4] # check the output
@@ -188,7 +187,7 @@ For loops are not very effective in R. A better way to do this is by using sappl
 ?sapply
 ```
 
-**Excercise: Create the colour varialbe using sapply. Check that the resulting variable is identical to the one we just created with the for loop.**
+**Excercise: Create the colour variable using sapply. Check that the resulting variable is identical to the one we just created with the for loop.**
 
 <!---
 longitudinal_colour_v2=NA
@@ -395,7 +394,7 @@ dev.off()
 
 ## 2. Visualization techniques: Scatterplots and alpha diversity
 
-We will use a subset of the MetaCyc metabolic pathways (based on HUMAnN2) from the 78 samples that were part of the HMP2 pilot study and compare DNA versus RNA alpha diversity (Gini-Simpson index) from MetaCyc metabolic pathways. We will only consider pathways that were detected in both data types.
+We will use a subset of the MetaCyc metabolic pathways (based on HUMAnN2) from the 78 samples that were part of the HMP2 pilot study and compare DNA versus RNA alpha diversity (Gini-Simpson index) of MetaCyc metabolic pathways. We will only consider pathways that were detected in both data types.
 
 Set up the environment and load the packages.
 
@@ -507,7 +506,9 @@ filtered_alpha_div <- function(p=1, data_pwys = MGX_pwys, data_pwy_lst = MGX_pwy
 ```
 
 
-First apply this to the metagenomic data. Create a data matrix: each column is a sample and each row specifies the alpha diversity of a particular pathway.
+**First apply this function to the metagenomic data.** 
+
+Create a data matrix: each column is a sample and each row specifies the alpha diversity of a particular pathway.
 
 Set up the matrix:
 
@@ -530,7 +531,7 @@ nrow(MGX_a_div)
 ```
 
 
-Remove rows that are all "-1" and are all contributed by "unclassified"
+Remove rows that are all "-1" as that means that the pathway is entirely contributed by "unclassified" organisms.
 
 ```R
 MGX_a_div = MGX_a_div[apply(MGX_a_div, 1, function(x) sum(x==-1)!=ncol(MGX_a_div)),]
@@ -539,7 +540,7 @@ nrow(MGX_a_div)
 ```
 
 
-Now apply this to the metatranscriptomic data.
+**Now apply this function to the metatranscriptomic data.**
 
 Set up the matrix:
 
@@ -561,7 +562,7 @@ rownames(MTX_a_div)= sapply(seq(1,length(MTX_pwy_lst)), function(p) as.character
 nrow(MTX_a_div)
 ```
 
-Remove rows that are all "-1" and are all contributed by "unclassified".
+Remove rows that are all "-1".
 
 ```R
 MTX_a_div = MTX_a_div[apply(MTX_a_div, 1, function(x) sum(x==-1)!=ncol(MTX_a_div)),]
@@ -581,7 +582,7 @@ Set the threshold:
 my_presence_threshold = round(0.2 * ncol(MGX_a_div))
 ``` 
 
-Subset data.frmae and compute alpha diversity for metagenomic data:
+Subset the data.frmae and compute alpha diversity for the metagenomic data:
 
 ```R
 MGX_a_div_sub = MGX_a_div[rowSums(!MGX_a_div < 0) > my_presence_threshold,]
@@ -643,7 +644,7 @@ g
 dev.off()
 ```
 
-**Now we want to colour the points by the log DNA/RNA ratio of each pathway.**
+**Now we want to colour the points by the log RNA/DNA ratio of each pathway.**
 
 Create variable that reflects the dna/rna ratio
 
