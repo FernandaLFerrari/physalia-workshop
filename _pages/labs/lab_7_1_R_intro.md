@@ -74,7 +74,7 @@ install.packages("ggplot2")
 library(ggplot2)
 ```
 
-Alternative: In Rstudio, go to the "Packages" tab and click the "Istall" button.
+Alternative: In Rstudio, go to the "Tools" tab and click the "Install packages" button.
 Search in the pop-up window and click "Install".
 
 
@@ -84,6 +84,7 @@ Search in the pop-up window and click "Install".
 help(help)
 help(sqrt)
 ?sqrt
+help(ggplot)
 ```
 
 
@@ -100,12 +101,12 @@ The ```<-``` (less than followed by a dash) or ```=``` operator is used to save 
 ```R
 sqrt(7) #calculate square root of 7; result is not stored anywhere
 
-x <- sqrt(7) #assign result to a variable named x
+x = sqrt(7) #assign result to a variable named x
 ```
 
 **Calling R functions and reading data**
 
-We will use an example project of the most popular baby names in the United States and the United Kingdom. A cleaned and merged version of the data file is available at ***http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv***.
+We will use an example project looking at the most popular baby names in the United States and the United Kingdom. A cleaned and merged version of the data file is available at: ***http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv***
 
 
 In order to read data from a file, you have to know what kind of file it is. 
@@ -140,7 +141,7 @@ str(baby.names)
 
 ### Excercise 2: data.frame objects
 
-Usually data read into R will be stored as a **data.frame**.
+Data read into R will often be stored as a **data.frame**.
 
 * A data.frame is a list of vectors of equal length
 * Each vector in the list forms a column
@@ -166,7 +167,7 @@ Output a specific columns of the data.frame.
 baby.names$Name
 ```
 
-Have many babies were called "jill"?
+Have many entires are there for the name "jill"?
 ```R
 sum(baby.names$Name == "jill")
 ```
@@ -296,8 +297,8 @@ Now that we have made some changes to our data set, we might want to save those 
 
 ```R
 getwd() # Check current working directory. Is this where you want to save your file?
-dir.create("R_Tutorial") # Create a new directory
-setwd("/Users/melanie/R_tutorial") # Change the current working directory 
+dir.create("Desktop/R_Tutorial") # Create a new directory
+setwd("/Users/melanie/Desktop/R_tutorial") # Change the current working directory 
 write.csv(baby.names, file="babyNames_v2.csv")
 ```
 
@@ -385,8 +386,14 @@ boxplot(Name.length~Sex,data=baby.names, col=c("cornflowerblue", "deeppink3"))
 dev.off()
 ```
 
+<!--
+pdf(file="boxplot.pdf", height=5, width=5)
+boxplot(Name.length~Sex,data=baby.names, col=c("cornflowerblue", "deeppink3"), ylab="Name length", main="Boxplot")
+dev.off()
+-->
 
-What about other file formats?
+
+What about other file formats (e.g. jpeg)?
 
 
 
